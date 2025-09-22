@@ -4,7 +4,8 @@ This project is an ETH staking app on Sepolia testnet, using the FHEStake smart 
 Users can stake ETH, earn automatic rewards, withdraw, and claim rewards. The contract owner can adjust the reward rate
 and reset user rewards.
 
-Website: Contract: 0xa6111e24F7C65a30f7c0E1eF23c91AA2f47d368a
+LIVE Demo: https://zama-staking.vercel.app/
+Contract: 0xa6111e24F7C65a30f7c0E1eF23c91AA2f47d368a
 
 ## Project File Tree
 
