@@ -29,9 +29,12 @@ export default function FHEStakePage() {
   const {
     isLoading: isActionLoading,
     loadingAction: actionLoadingText,
+    fhevmEnabled,
+    initializeFHEVM,
     handleStake,
     handleWithdraw,
     handleClaimReward,
+    handleClaimEncryptedReward,
   } = useStakeActions(contract, provider, account, loadUserData);
   useRewardRefresh(isConnected, contract, provider, account, setPendingReward);
 
@@ -94,6 +97,33 @@ export default function FHEStakePage() {
                     Ngắt kết nối
                   </Button>
                 </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* FHEVM Status Card */}
+          <Card className="border-border/50 bg-card/50 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <span className={fhevmEnabled ? "text-green-500" : "text-yellow-500"}>🔒</span>
+                FHEVM Status
+              </CardTitle>
+              <CardDescription>
+                {fhevmEnabled 
+                  ? "FHEVM is enabled and ready for encrypted operations"
+                  : "Click to enable FHEVM for encrypted rewards"
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {!fhevmEnabled ? (
+                <Button onClick={initializeFHEVM} variant="outline" size="sm">
+                  Initialize FHEVM
+                </Button>
+              ) : (
+                <Badge variant="outline" className="text-green-600 border-green-600">
+                  ✓ FHEVM Ready
+                </Badge>
               )}
             </CardContent>
           </Card>

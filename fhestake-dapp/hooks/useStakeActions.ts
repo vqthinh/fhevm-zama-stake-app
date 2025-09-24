@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
+import { FHEVMHelper, createEncryptedRewardInput } from "../lib/fhevm";
 
 export function useStakeActions(
   contract: ethers.Contract | null,
@@ -9,6 +10,20 @@ export function useStakeActions(
 ) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loadingAction, setLoadingAction] = useState<string>("");
+  const [fhevmEnabled, setFhevmEnabled] = useState<boolean>(false);
+
+  // Initialize FHEVM when component mounts
+  const initializeFHEVM = async () => {
+    try {
+      const instance = await FHEVMHelper.initializeFHEVM();
+      setFhevmEnabled(!!instance);
+      return !!instance;
+    } catch (error) {
+      console.error("Failed to initialize FHEVM:", error);
+      setFhevmEnabled(false);
+      return false;
+    }
+  };
 
   const handleStake = async (stakeInput: string, setStakeInput: (v: string) => void) => {
     if (!contract || !provider || !stakeInput) return;
@@ -68,11 +83,60 @@ export function useStakeActions(
     }
   };
 
+  // New FHEVM-enabled encrypted reward claiming
+  const handleClaimEncryptedReward = async (rewardAmount: number) => {
+    if (!contract || !provider || !account) return;
+    try {
+      setIsLoading(true);
+      setLoadingAction("Creating encrypted proof...");
+      
+      // Initialize FHEVM if not already done
+      if (!fhevmEnabled) {
+        const initialized = await initializeFHEVM();
+        if (!initialized) {
+          throw new Error("Failed to initialize FHEVM");
+        }
+      }
+
+      // Create encrypted input for the reward amount
+      const encryptedInput = await createEncryptedRewardInput(
+        await contract.getAddress(),
+        account,
+        rewardAmount
+      );
+
+      if (!encryptedInput) {
+        throw new Error("Failed to create encrypted input");
+      }
+
+      setLoadingAction("Claiming encrypted rewards...");
+      
+      // Call the new encrypted reward claiming function
+      const tx = await contract.claimEncryptedReward(
+        encryptedInput.inputEuint32,
+        encryptedInput.inputProof
+      );
+      
+      await tx.wait();
+      await loadUserData();
+      alert("Encrypted reward claimed successfully!");
+    } catch (error) {
+      console.error("Error claiming encrypted reward:", error);
+      alert("Claiming encrypted reward failed: " + (error as Error).message);
+    } finally {
+      setIsLoading(false);
+      setLoadingAction("");
+    }
+  };
+
   return {
     isLoading,
     loadingAction,
+    fhevmEnabled,
+    initializeFHEVM,
     handleStake,
     handleWithdraw,
     handleClaimReward,
+    handleClaimEncryptedReward,
   };
 }

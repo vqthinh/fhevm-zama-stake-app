@@ -14,10 +14,82 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "EthereumConfig",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.EthereumConfig__factory>;
+    getContractFactory(
+      name: "SepoliaConfig",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.SepoliaConfig__factory>;
+    getContractFactory(
+      name: "FHE",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.FHE__factory>;
+    getContractFactory(
+      name: "IDecryptionOracle",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IDecryptionOracle__factory>;
+    getContractFactory(
+      name: "IKMSVerifier",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IKMSVerifier__factory>;
+    getContractFactory(
+      name: "IACL",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IACL__factory>;
+    getContractFactory(
+      name: "IFHEVMExecutor",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IFHEVMExecutor__factory>;
+    getContractFactory(
+      name: "IInputVerifier",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IInputVerifier__factory>;
+    getContractFactory(
       name: "FHEStake",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.FHEStake__factory>;
 
+    getContractAt(
+      name: "EthereumConfig",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.EthereumConfig>;
+    getContractAt(
+      name: "SepoliaConfig",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.SepoliaConfig>;
+    getContractAt(
+      name: "FHE",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.FHE>;
+    getContractAt(
+      name: "IDecryptionOracle",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IDecryptionOracle>;
+    getContractAt(
+      name: "IKMSVerifier",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IKMSVerifier>;
+    getContractAt(
+      name: "IACL",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IACL>;
+    getContractAt(
+      name: "IFHEVMExecutor",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IFHEVMExecutor>;
+    getContractAt(
+      name: "IInputVerifier",
+      address: string | ethers.Addressable,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IInputVerifier>;
     getContractAt(
       name: "FHEStake",
       address: string | ethers.Addressable,
@@ -25,10 +97,82 @@ declare module "hardhat/types/runtime" {
     ): Promise<Contracts.FHEStake>;
 
     deployContract(
+      name: "EthereumConfig",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.EthereumConfig>;
+    deployContract(
+      name: "SepoliaConfig",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SepoliaConfig>;
+    deployContract(
+      name: "FHE",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.FHE>;
+    deployContract(
+      name: "IDecryptionOracle",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IDecryptionOracle>;
+    deployContract(
+      name: "IKMSVerifier",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IKMSVerifier>;
+    deployContract(
+      name: "IACL",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IACL>;
+    deployContract(
+      name: "IFHEVMExecutor",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IFHEVMExecutor>;
+    deployContract(
+      name: "IInputVerifier",
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IInputVerifier>;
+    deployContract(
       name: "FHEStake",
       signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.FHEStake>;
 
+    deployContract(
+      name: "EthereumConfig",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.EthereumConfig>;
+    deployContract(
+      name: "SepoliaConfig",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.SepoliaConfig>;
+    deployContract(
+      name: "FHE",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.FHE>;
+    deployContract(
+      name: "IDecryptionOracle",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IDecryptionOracle>;
+    deployContract(
+      name: "IKMSVerifier",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IKMSVerifier>;
+    deployContract(
+      name: "IACL",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IACL>;
+    deployContract(
+      name: "IFHEVMExecutor",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IFHEVMExecutor>;
+    deployContract(
+      name: "IInputVerifier",
+      args: any[],
+      signerOrOptions?: ethers.Signer | DeployContractOptions
+    ): Promise<Contracts.IInputVerifier>;
     deployContract(
       name: "FHEStake",
       args: any[],
