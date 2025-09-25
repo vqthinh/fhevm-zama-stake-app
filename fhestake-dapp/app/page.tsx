@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { SuccessModal } from "@/components/ui/success-modal";
 import { Wallet, ExternalLink, Loader2, TrendingUp, DollarSign, Award } from "lucide-react";
 
 import { useEffect } from "react";
@@ -30,7 +31,9 @@ export default function FHEStakePage() {
     isLoading: isActionLoading,
     loadingAction: actionLoadingText,
     fhevmEnabled,
+    successModal,
     initializeFHEVM,
+    closeSuccessModal,
     handleStake,
     handleWithdraw,
     handleClaimReward,
@@ -239,6 +242,15 @@ export default function FHEStakePage() {
           </div>
         </div>
       </div>
+      
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={successModal.isOpen}
+        onClose={closeSuccessModal}
+        title={successModal.title}
+        description={successModal.description}
+        transactionHash={successModal.transactionHash}
+      />
     </div>
   );
 }

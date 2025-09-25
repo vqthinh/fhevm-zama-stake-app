@@ -12,7 +12,7 @@ Users can stake ETH, earn automatic rewards with **encrypted reward tracking**, 
 
 LIVE Demo: https://zama-staking.vercel.app/
 
-Contract: 0xa6111e24F7C65a30f7c0E1eF23c91AA2f47d368a
+**Deployed Contract**: 0xa6111e24F7C65a30f7c0E1eF23c91AA2f47d368a (Updated with FHEVM integration)
 
 ## Project File Tree
 

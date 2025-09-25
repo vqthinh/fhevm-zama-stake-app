@@ -2,6 +2,13 @@ import { useState } from "react";
 import { ethers } from "ethers";
 import { FHEVMHelper, createEncryptedRewardInput } from "../lib/fhevm";
 
+interface SuccessModalData {
+  isOpen: boolean;
+  title: string;
+  description: string;
+  transactionHash?: string;
+}
+
 export function useStakeActions(
   contract: ethers.Contract | null,
   provider: ethers.BrowserProvider | null,
@@ -11,6 +18,12 @@ export function useStakeActions(
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loadingAction, setLoadingAction] = useState<string>("");
   const [fhevmEnabled, setFhevmEnabled] = useState<boolean>(false);
+  const [successModal, setSuccessModal] = useState<SuccessModalData>({
+    isOpen: false,
+    title: "",
+    description: "",
+    transactionHash: undefined
+  });
 
   // Initialize FHEVM when component mounts
   const initializeFHEVM = async () => {
@@ -25,6 +38,10 @@ export function useStakeActions(
     }
   };
 
+  const closeSuccessModal = () => {
+    setSuccessModal({ isOpen: false, title: "", description: "", transactionHash: undefined });
+  };
+
   const handleStake = async (stakeInput: string, setStakeInput: (v: string) => void) => {
     if (!contract || !provider || !stakeInput) return;
     try {
@@ -36,7 +53,13 @@ export function useStakeActions(
       await tx.wait();
       setStakeInput("");
       await loadUserData();
-      alert("Staking successful!");
+      
+      setSuccessModal({
+        isOpen: true,
+        title: "Staking Successful!",
+        description: `Successfully staked ${stakeInput} ETH. You can now start earning rewards.`,
+        transactionHash: tx.hash
+      });
     } catch (error) {
       console.error("Error staking:", error);
       alert("Staking failed");
@@ -55,7 +78,13 @@ export function useStakeActions(
       const tx = await contract.withdraw(ethers.parseEther(stakedAmount));
       await tx.wait();
       await loadUserData();
-      alert("Withdrawal successful!");
+      
+      setSuccessModal({
+        isOpen: true,
+        title: "Withdrawal Successful!",
+        description: `Successfully withdrew ${stakedAmount} ETH from your stake.`,
+        transactionHash: tx.hash
+      });
     } catch (error) {
       console.error("Error withdrawing:", error);
       alert("Withdrawal failed");
@@ -73,7 +102,13 @@ export function useStakeActions(
       const tx = await contract.claimReward();
       await tx.wait();
       await loadUserData();
-      alert("Reward claimed successfully!");
+      
+      setSuccessModal({
+        isOpen: true,
+        title: "Rewards Claimed!",
+        description: "Your rewards have been successfully claimed and transferred to your wallet.",
+        transactionHash: tx.hash
+      });
     } catch (error) {
       console.error("Error claiming reward:", error);
       alert("Claiming reward failed");
@@ -119,7 +154,13 @@ export function useStakeActions(
       
       await tx.wait();
       await loadUserData();
-      alert("Encrypted reward claimed successfully!");
+      
+      setSuccessModal({
+        isOpen: true,
+        title: "Encrypted Rewards Claimed!",
+        description: "Your rewards have been successfully claimed using FHEVM encryption.",
+        transactionHash: tx.hash
+      });
     } catch (error) {
       console.error("Error claiming encrypted reward:", error);
       alert("Claiming encrypted reward failed: " + (error as Error).message);
@@ -133,7 +174,9 @@ export function useStakeActions(
     isLoading,
     loadingAction,
     fhevmEnabled,
+    successModal,
     initializeFHEVM,
+    closeSuccessModal,
     handleStake,
     handleWithdraw,
     handleClaimReward,
